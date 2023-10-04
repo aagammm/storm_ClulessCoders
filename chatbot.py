@@ -1,39 +1,27 @@
-import openai
+# Function for simulating a conversation between two users
+def chatbox(user1_name, user2_name):
+    print(f"{user1_name}: Hello!")
+    print(f"{user2_name}: Hi there!")
 
-# Set your OpenAI API key
-openai.api_key = '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'
+    while True:
+        user1_input = input(f"{user1_name}: ")
+        if user1_input.lower() in ['exit', 'quit']:
+            break
 
-# Initialize a conversation with a system message
-conversation = [
-    {"role": "system", "content": "You are a helpful assistant."},
-]
+        user2_input = input(f"{user2_name}: ")
+        if user2_input.lower() in ['exit', 'quit']:
+            break
 
-# Function to get a chatbot response
-def get_chatbot_response(user_input):
-    # Add the user's message to the conversation
-    conversation.append({"role": "user", "content": user_input})
+        print(f"{user1_name}: {user1_input}")
+        print(f"{user2_name}: {user2_input}")
 
-    # Generate a response from the chatbot
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=conversation,
-    )
+# Main code
+if __name__ == "__main__":
+    user1_name = input("Enter User 1's name: ")
+    user2_name = input("Enter User 2's name: ")
 
-    # Extract and return the chatbot's reply
-    chatbot_reply = response['choices'][0]['message']['content']
-    return chatbot_reply
+    print("Chatbox: Welcome to the chatbox!")
 
-# Main interaction loop
-print("Chatbot: Hello! How can I assist you today?")
-while True:
-    user_input = input("You: ")
+    chatbox(user1_name, user2_name)
 
-    # Exit the loop if the user enters 'exit' or 'quit'
-    if user_input.lower() in ['exit', 'quit']:
-        break
-
-    # Get the chatbot's response
-    chatbot_response = get_chatbot_response(user_input)
-
-    # Display the chatbot's reply
-    print("Chatbot:", chatbot_response)
+    print("Chatbox: Goodbye! Chat session ended.")
